@@ -63,6 +63,7 @@ testAndCount() {
 		mvn clean > /dev/null
 }
 
+
 measureProject() {
 
 	mvn test-compile > /dev/null
@@ -84,93 +85,103 @@ for project in "${names[@]}"
 do
 	pushd "$project"
 
+
 	if [[ -d "$TRUNK" ]]; then # Case for SVN
 	    LOG=$(svn info)
-	    pushd "trunk"
+		declare -a revisions
+
+		for temp in {1..20} # get to last revision
+		do	    
+			svn update -r PREV
+			revisions+=($(svn info --show-item revision))
+		done
+
+
+
+
+		for (( index=${#revisions[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back
+			pushd "trunk"
+		    svn update -r "${revisions[index]}"
+		    measureProject "$project" "baseTime"
+
+
+
+
+		    # Ekstazi
+		    python3 "$ADDEX"
+			
+			mvn test-compile > /dev/null # Download deps and create "target directories"
+	 
+		    testAndCount "$project" "ekstaziAE" # Run AE
+
+
+		    startSavingDependencies
+
+			
+			mvn test-compile > /dev/null # create "target directories"
+
+		    testAndCount "$project" "ekstaziAEC" # Run AEC
+
+		    stopSavingDependencies
+
+		   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
+
+
+			popd # TRUNK
+
+		    
+		done
+
+
+
+
 	else #Case for GIT
 		LOG=$(git status)
-	fi
 
-
-	# Download deps and create "target directories"
-	mvn test-compile > /dev/null
-
-
-	if [[ "$?" -ne 0 ]] ; then
-		echo $LOG >> $LOGPATH
-		echo "failed to Compile!  SKIPPING project and LOGGING"
-		continue
-	fi
-
-	testAndCount "$project" "baseTime"
+		hashes=($(git log --format=format:%H -n 21)) # print hashes
 
 
 
 
-	# Case for SVN
-	if [[ -d "$TRUNK" ]]; then 
-	    popd # TRUNK
-	fi
+		firstCommit=(${hashes[0]}) # create an array from first element
 
 
 
+		hashes=($(echo "${hashes[@]/$firstCommit}")) # echo hashes wuthout the first commit, then save it as an array
+
+		for (( index=${#hashes[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back
+		    git reset --hard "${hashes[index]}"
+		    measureProject "$project" "baseTime"
 
 
-# NOW WITH EKSTAZI 
-	if [[ -d "$TRUNK" ]]; then
-	    svn info
-	    pushd "trunk"
 
-	    python3 "$ADDEX"
-		
-		mvn test-compile > /dev/null # Download deps and create "target directories"
- 
-	    testAndCount "$project" "ekstaziAE" # Run AE
+		    # Ekstazi
+			git status
 
-
-	    startSavingDependencies
-
-		
-		mvn test-compile > /dev/null # create "target directories"
-
-	    testAndCount "$project" "ekstaziAEC" # Run AEC
-
-	    stopSavingDependencies
-
-	   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
+		    python3 "$ADDEX" # add extazi
+		    
+			mvn test-compile > /dev/null # Download deps and create "target directories"
+	 
+		    testAndCount "$project" "ekstaziAE" # Run AE
 
 
-		popd # TRUNK
+		    startSavingDependencies
 
-	    
-	    # svn update -r PREV
-	    svn info
+			
+			mvn test-compile > /dev/null # create "target directories"
 
-	else
-		git status
+		    testAndCount "$project" "ekstaziAEC" # Run AEC
 
-	    python3 "$ADDEX"
-	    
-		mvn test-compile > /dev/null # Download deps and create "target directories"
- 
-	    testAndCount "$project" "ekstaziAE" # Run AE
+		    stopSavingDependencies
 
+		   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
 
-	    startSavingDependencies
-
-		
-		mvn test-compile > /dev/null # create "target directories"
-
-	    testAndCount "$project" "ekstaziAEC" # Run AEC
-
-	    stopSavingDependencies
-
-	   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
-
-	    # git checkout HEAD~
-	    git status
+		    # git checkout HEAD~
+		    git status
+		done
 
 	fi
+	
 	popd # PROJECT
 done
 
