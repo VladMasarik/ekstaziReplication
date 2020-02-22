@@ -63,8 +63,21 @@ testAndCount() {
 		mvn clean > /dev/null
 }
 
-measureProject() {
 
+
+for project in "${names[@]}" 
+do
+	pushd "$project"
+
+	if [[ -d "$TRUNK" ]]; then # Case for SVN
+	    LOG=$(svn info)
+	    pushd "trunk"
+	else #Case for GIT
+		LOG=$(git status)
+	fi
+
+
+	# Download deps and create "target directories"
 	mvn test-compile > /dev/null
 
 
@@ -74,113 +87,75 @@ measureProject() {
 		continue
 	fi
 
-	testAndCount "$1" "$2"
-
-}
-
-
-
-for project in "${names[@]}" 
-do
-	pushd "$project"
-
-
-	if [[ -d "$TRUNK" ]]; then # Case for SVN
-	    LOG=$(svn info)
-		declare -a revisions
-
-		for temp in {1..20} # get to last revision
-		do	    
-			svn update -r PREV
-			revisions+=($(svn info --show-item revision))
-		done
+	testAndCount "$project" "baseTime"
 
 
 
 
-		for (( index=${#revisions[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back
-			pushd "trunk"
-		    svn update -r "${revisions[index]}"
-		    measureProject "$project" "baseTime"
+	# Case for SVN
+	if [[ -d "$TRUNK" ]]; then 
+	    popd # TRUNK
+	fi
 
 
 
 
-		    # Ekstazi
-		    python3 "$ADDEX"
-			
-			mvn test-compile > /dev/null # Download deps and create "target directories"
-	 
-		    testAndCount "$project" "ekstaziAE" # Run AE
+
+# NOW WITH EKSTAZI 
+	if [[ -d "$TRUNK" ]]; then
+	    svn info
+	    pushd "trunk"
+
+	    python3 "$ADDEX"
+		
+		mvn test-compile > /dev/null # Download deps and create "target directories"
+ 
+	    testAndCount "$project" "ekstaziAE" # Run AE
 
 
-		    startSavingDependencies
+	    startSavingDependencies
 
-			
-			mvn test-compile > /dev/null # create "target directories"
+		
+		mvn test-compile > /dev/null # create "target directories"
 
-		    testAndCount "$project" "ekstaziAEC" # Run AEC
+	    testAndCount "$project" "ekstaziAEC" # Run AEC
 
-		    stopSavingDependencies
+	    stopSavingDependencies
 
-		   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
-
-
-			popd # TRUNK
-
-		    
-		done
+	   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
 
 
+		popd # TRUNK
+
+	    
+	    # svn update -r PREV
+	    svn info
+
+	else
+		git status
+
+	    python3 "$ADDEX"
+	    
+		mvn test-compile > /dev/null # Download deps and create "target directories"
+ 
+	    testAndCount "$project" "ekstaziAE" # Run AE
 
 
-	else #Case for GIT
-		LOG=$(git status)
+	    startSavingDependencies
 
-		hashes=($(git log --format=format:%H -n 21)) # print hashes
+		
+		mvn test-compile > /dev/null # create "target directories"
 
+	    testAndCount "$project" "ekstaziAEC" # Run AEC
 
+	    stopSavingDependencies
 
+	   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
 
-		firstCommit=(${hashes[0]}) # create an array from first element
-
-
-
-		hashes=($(echo "${hashes[@]/$firstCommit}")) # echo hashes wuthout the first commit, then save it as an array
-
-		for (( index=${#hashes[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back
-		    git reset --hard "${hashes[index]}"
-		    measureProject "$project" "baseTime"
-
-
-
-		    # Ekstazi
-			git status
-
-		    python3 "$ADDEX"
-		    
-			mvn test-compile > /dev/null # Download deps and create "target directories"
-	 
-		    testAndCount "$project" "ekstaziAE" # Run AE
-
-
-		    startSavingDependencies
-
-			
-			mvn test-compile > /dev/null # create "target directories"
-
-		    testAndCount "$project" "ekstaziAEC" # Run AEC
-
-		    stopSavingDependencies
-
-		   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
-
-		    # git checkout HEAD~
-		    git status
-		done
+	    # git checkout HEAD~
+	    git status
 
 	fi
-	
 	popd # PROJECT
 done
 
