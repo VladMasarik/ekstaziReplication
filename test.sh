@@ -158,7 +158,7 @@ do
 		    # Ekstazi
 			git status
 
-		    python3 "$ADDEX"
+		    python3 "$ADDEX" # add extazi
 		    
 			mvn test-compile > /dev/null # Download deps and create "target directories"
 	 
