@@ -54,4 +54,4 @@ def addEkstazi():
 	tree.write(pomFile) # POM folder
 
 
-# addEkstazi()
+addEkstazi()

@@ -2,6 +2,7 @@ import sqlite3
 import xml.etree.ElementTree as ET
 from os import listdir
 from os.path import isfile, join
+import os
 import argparse
 
 
@@ -9,7 +10,7 @@ import argparse
 
 conn = sqlite3.connect('/home/vmasarik/git/exReplic/mbm.db')
 c = conn.cursor()
-mypath = "target/surefire-reports/"
+mypath = "target/surefire-reports"
 data = {
 	"project": "",
 	"time": 0,
@@ -37,10 +38,8 @@ def getArgs():
 
 def getXMLFiles():
 	files = []
-
+	print("current DIR =",os.getcwd())
 	dirtyFiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-
-	print(dirtyFiles)
 
 
 	for f in dirtyFiles:
@@ -48,7 +47,6 @@ def getXMLFiles():
 			files.append(f)
 
 
-	print(files)
 	return files
 
 
@@ -81,7 +79,7 @@ files = getXMLFiles()
 
 
 for filePath in files:
-	data = countFile(data,projectPath + "/" + mypath + filePath)
+	data = countFile(data,projectPath + "/" + mypath + "/" + filePath)
 
 print(data)
 
@@ -89,10 +87,9 @@ print(data)
 
 # Insert a row of data
 c.execute("INSERT INTO projects VALUES (?,?,?,?,?,?,?)",tuple(data.values()))
+print("Fetch Note =", c.fetchone())
 
 # Save (commit) the changes
-c.execute("SELECT * FROM projects")
-print(c.fetchone())
 conn.commit()
 
 conn.close()

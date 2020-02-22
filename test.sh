@@ -4,7 +4,7 @@
 set -x
 
 
-declare -a names=("retrofit" "validator")
+declare -a names=("validator" "retrofit")
 
 TRUNK="trunk"
 TARGET="target"
@@ -28,7 +28,7 @@ count() {
 
 # In case there are multiple sub projects, it counts them all
 countSubProjects() {
-	for i in $(ls -d */)
+	for i in $(ls -d */) # list current directories
 	do
 		pushd ${i%%/} # access $i and cut out the last '/'
 		if [[ -d "$TARGET" ]]; then
@@ -40,11 +40,11 @@ countSubProjects() {
 }
 
 startSavingDependencies() {
-	mv "$HOME/.ekstazirc.old" "$HOME/.ekstazirc" 
+	mv "$HOME/.ekstazirc" "$HOME/.ekstazirc.old" 
 }
 
 stopSavingDependencies() {
-	mv "$HOME/.ekstazirc" "$HOME/.ekstazirc.old" 
+	mv "$HOME/.ekstazirc.old" "$HOME/.ekstazirc" 
 }
 
 # Decide whether to count subprojects
@@ -86,7 +86,7 @@ do
 		for (( index=${#revisions[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back
 			pushd "trunk"
 		    svn update -r "${revisions[index]}"
-
+		    svn cleanup --remove-unversioned
 			mvn test-compile > /dev/null
 
 
@@ -104,6 +104,8 @@ do
 		    # Ekstazi
 		    python3 "$ADDEX"
 			
+		    stopSavingDependencies
+
 			mvn test-compile > /dev/null # Download deps and create "target directories"
 	 
 		    testAndCount "$project" "ekstaziAE" # Run AE
@@ -118,7 +120,6 @@ do
 
 		    stopSavingDependencies
 
-		   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
 
 
 			popd # TRUNK
@@ -144,8 +145,9 @@ do
 		hashes=($(echo "${hashes[@]/$firstCommit}")) # echo hashes wuthout the first commit, then save it as an array
 
 		for (( index=${#hashes[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back
-		    git checkout --force "${hashes[index]}"
 
+		    git checkout --force "${hashes[index]}"
+		    git clean -d -x -f # delete untracted files and folder
 			mvn test-compile > /dev/null
 
 
@@ -164,6 +166,8 @@ do
 
 		    python3 "$ADDEX" # add extazi
 		    
+		    stopSavingDependencies
+
 			mvn test-compile > /dev/null # Download deps and create "target directories"
 	 
 		    testAndCount "$project" "ekstaziAE" # Run AE
@@ -178,7 +182,6 @@ do
 
 		    stopSavingDependencies
 
-		   	mvn ekstazi:clean # quite probably delete this because it will interfier with further testing by deleting the dependencies
 
 		    # git checkout HEAD~
 		    git status
