@@ -16,14 +16,14 @@ LOGPATH="/home/vmasarik/git/log.txt"
 
 # measures testing time
 timeTest() {
-	TIME="$((/usr/bin/time -f %e mvn test > /dev/null) 2>&1)" # trash the stdOUT, catch the error, and send that to TIME
+	TIME="$( (/usr/bin/time -f %e mvn test > /dev/null ) 2>&1)" # trash the stdOUT, catch the error, and send that to TIME
 }
 
 
 
 # executes counting script
 count() {
-	python3 "$COUNT" "$1" $(pwd) "$TIME" "$2"
+	python3 "$COUNT" "$1" "$(pwd)" "$TIME" "$2"
 }
 
 # In case there are multiple sub projects, it counts them all
@@ -64,22 +64,6 @@ testAndCount() {
 }
 
 
-measureProject() {
-
-	mvn test-compile > /dev/null
-
-
-	if [[ "$?" -ne 0 ]] ; then
-		echo $LOG >> $LOGPATH
-		echo "failed to Compile!  SKIPPING project and LOGGING"
-		continue
-	fi
-
-	testAndCount "$1" "$2"
-
-}
-
-
 
 for project in "${names[@]}" 
 do
@@ -102,7 +86,17 @@ do
 		for (( index=${#revisions[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back
 			pushd "trunk"
 		    svn update -r "${revisions[index]}"
-		    measureProject "$project" "baseTime"
+
+			mvn test-compile > /dev/null
+
+
+			if [[ "$?" -ne 0 ]] ; then
+				echo "$LOG" >> $LOGPATH
+				echo "failed to Compile!  SKIPPING project and LOGGING"
+				continue
+			fi
+
+			testAndCount "$project" "baseTime"
 
 
 
@@ -150,8 +144,18 @@ do
 		hashes=($(echo "${hashes[@]/$firstCommit}")) # echo hashes wuthout the first commit, then save it as an array
 
 		for (( index=${#hashes[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back
-		    git reset --hard "${hashes[index]}"
-		    measureProject "$project" "baseTime"
+		    git checkout --force "${hashes[index]}"
+
+			mvn test-compile > /dev/null
+
+
+			if [[ "$?" -ne 0 ]] ; then
+				echo "$LOG" >> $LOGPATH
+				echo "failed to Compile!  SKIPPING project and LOGGING"
+				continue
+			fi
+
+			testAndCount "$project" "baseTime"
 
 
 
