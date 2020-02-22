@@ -63,6 +63,7 @@ testAndCount() {
 		mvn clean > /dev/null
 }
 
+
 measureProject() {
 
 	mvn test-compile > /dev/null
