@@ -63,6 +63,21 @@ testAndCount() {
 		mvn clean > /dev/null
 }
 
+measureProject() {
+
+	mvn test-compile > /dev/null
+
+
+	if [[ "$?" -ne 0 ]] ; then
+		echo $LOG >> $LOGPATH
+		echo "failed to Compile!  SKIPPING project and LOGGING"
+		continue
+	fi
+
+	testAndCount "$1" "$2"
+
+}
+
 
 
 for project in "${names[@]}" 
