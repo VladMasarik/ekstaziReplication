@@ -126,21 +126,21 @@ do
 		    # Ekstazi
 		    python3 "$ADDEX"
 			
-		    stopSavingDependencies
+		    # stopSavingDependencies
 
-			mvn test-compile > /dev/null # Download deps and create "target directories"
+			# mvn test-compile > /dev/null # Download deps and create "target directories"
 	 
-		    testAndCount "$project" "ekstaziAE" # Run AE
+		    # testAndCount "$project" "ekstaziAE" # Run AE
 
 
-		    startSavingDependencies
+		    # startSavingDependencies
 
 			
 			mvn test-compile > /dev/null # create "target directories"
 
 		    testAndCount "$project" "ekstaziAEC" # Run AEC
 
-		    stopSavingDependencies
+		    # stopSavingDependencies
 
 			
 
