@@ -117,7 +117,8 @@ do
             svn revert -R "." # piece of shit svn, I have to revert everything back, before I can get back to the update
             svn update -r "${revisions[index]}"
             svn cleanup --remove-unversioned # see previous cleanup, so I have to do this twice
-            LOG=$(mvn test-compile)
+            LOG=$(mvn test-compile) #first to see if it compiles
+            mvn test > /dev/null # create "target directories"
 
 
             if [[ "$?" -ne 0 ]] ; then
@@ -142,7 +143,8 @@ do
 
             # startSavingDependencies
 
-            mvn test-compile > /dev/null # create "target directories"
+            mvn test > /dev/null # create "target directories"
+            mvn ekstazi:clean > dev/null
 
             testAndCount "$project" "ekstaziAEC" # Run AEC
 
@@ -177,7 +179,8 @@ do
 
             git checkout --force "${hashes[index]}"
             git clean -d -x -f # delete untracted files and folder
-            LOG=$(mvn test-compile)
+            LOG=$(mvn test-compile) #first to see if it compiles
+            mvn test > /dev/null # then to find the surefire reports, at this point if think scraping out would be better
 
 
             if [[ "$?" -ne 0 ]] ; then
@@ -205,7 +208,8 @@ do
             # startSavingDependencies
 
             
-            mvn test-compile > /dev/null # create "target directories"
+            mvn test > /dev/null # create "target directories"
+            mvn ekstazi:clean > dev/null
 
             testAndCount "$project" "ekstaziAEC" # Run AEC
 
