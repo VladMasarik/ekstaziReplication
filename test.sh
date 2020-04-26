@@ -43,7 +43,7 @@ countSubProjects() {
                 pwd
                 ls
                 echo "Surefire found!"
-                count ${i%%/} "$1"
+                count "$1-sub-${i%%/}" "$2"
                 popd # i%% POP
                 continue
             fi
@@ -84,7 +84,7 @@ testAndCount() {
         fi
         mvn clean > /dev/null
         timeTest
-        countSubProjects "$2"
+        countSubProjects "$1" "$2"
         mvn clean > /dev/null
 }
 
