@@ -7,13 +7,13 @@ import subprocess, shlex, os
 # reportFolder = "/home/vmasarik/git/net/trunk/target/surefire-reports/"
 # reportFile = "TEST-org.apache.commons.net.ftp.VladTest.xml"
 
-reportFolder = "~/git/net/trunk/"
-cloningFolder = "~/git/"
+reportFolder = "/home/vmasarik/git/net/trunk/"
+cloningFolder = "/home/vmasarik/git/"
 svnClient = pysvn.Client()
 
-if os.getcwd() != "~/git":
+if os.getcwd() != "/home/vmasarik/git":
 	print("Current dir", os.getcwd())
-	print("Not in ~/git; run python3 exReplic/main.py")
+	print("Not in /home/vmasarik/git; run python3 exReplic/main.py")
 	exit()
 
 

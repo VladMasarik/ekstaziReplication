@@ -93,7 +93,7 @@ do
 	    LOG=$(svn info)
 		declare -a revisions
 
-		for temp in {1..10} # get to last revision ############## RETURN BACK TO 20, I put it to 5 only to try it out faster!
+		for temp in {1..20} # get to last revision ############## RETURN BACK TO 20, I put it to 5 only to try it out faster!
 		do	    
 			svn update -r PREV
 			revisions+=($(svn info --show-item revision))
