@@ -36,8 +36,13 @@ countSubProjects() {
         pushd ${i%%/} # access $i and cut out the last '/'
         if [[ -d "$TARGET" ]]; then
             pushd $TARGET
+            pwd
+            ls
             if [ -d "$SUREFIRE" ]; then
                 popd # Target POP
+                pwd
+                ls
+                echo "Surefire found!"
                 count ${i%%/} "$1"
                 popd # i%% POP
                 continue
@@ -64,8 +69,11 @@ stopSavingDependencies() {
 testAndCount() {
         if [ -d "$TARGET" ]; then
             pushd $TARGET
+            pwd
+            ls
             if [ -d "$SUREFIRE" ]; then
                 popd
+                echo "Surefire found!"
                 mvn clean > /dev/null
                 timeTest
                 count "$1" "$2"
@@ -187,21 +195,21 @@ do
 
             python3 "$ADDEX" # add extazi
             
-            stopSavingDependencies
+            # stopSavingDependencies
 
-            mvn test-compile > /dev/null # Download deps and create "target directories"
+            # mvn test-compile > /dev/null # Download deps and create "target directories"
      
-            testAndCount "$project" "ekstaziAE" # Run AE
+            # testAndCount "$project" "ekstaziAE" # Run AE
 
 
-            startSavingDependencies
+            # startSavingDependencies
 
             
             mvn test-compile > /dev/null # create "target directories"
 
             testAndCount "$project" "ekstaziAEC" # Run AEC
 
-            stopSavingDependencies
+            # stopSavingDependencies
 
 
             # git checkout HEAD~
