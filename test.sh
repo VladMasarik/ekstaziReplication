@@ -4,16 +4,16 @@
 set -x
 
 # functor is done
-declare -a names=( "closure-compiler" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval")
+declare -a names=( "functor" "closure-compiler" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval")
 
 TRUNK="trunk"
 TARGET="target"
 SUREFIRE="surefire-reports"
-COUNT="/home/vmasarik/git/exReplic/count.py"
-ADDEX="/home/vmasarik/git/exReplic/addEkstazi.py"
+COUNT="/home/vlad/git/exReplic/count.py"
+ADDEX="/home/vlad/git/exReplic/addEkstazi.py"
 TIME=""
 LOG=""
-LOGPATH="/home/vmasarik/git/log.txt"
+LOGPATH="/home/vlad/git/log.txt"
 
 # measures testing time
 timeTest() {
