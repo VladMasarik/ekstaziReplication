@@ -8,7 +8,7 @@ import argparse
 
 
 
-conn = sqlite3.connect('/home/vmasarik/git/exReplic/mbm.db')
+conn = sqlite3.connect('/home/vlad/git/exReplic/mbm.db')
 c = conn.cursor()
 mypath = "target/surefire-reports"
 data = {

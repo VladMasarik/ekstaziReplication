@@ -4,16 +4,16 @@ from git import Repo
 import pysvn
 import subprocess, shlex, os
 
-# reportFolder = "/home/vmasarik/git/net/trunk/target/surefire-reports/"
+# reportFolder = "/home/vlad/git/net/trunk/target/surefire-reports/"
 # reportFile = "TEST-org.apache.commons.net.ftp.VladTest.xml"
 
-reportFolder = "/home/vmasarik/git/net/trunk/"
-cloningFolder = "/home/vmasarik/git/"
+reportFolder = "/home/vlad/git/net/trunk/"
+cloningFolder = "/home/vlad/git/"
 svnClient = pysvn.Client()
 
-if os.getcwd() != "/home/vmasarik/git":
+if os.getcwd() != "/home/vlad/git":
 	print("Current dir", os.getcwd())
-	print("Not in /home/vmasarik/git; run python3 exReplic/main.py")
+	print("Not in /home/vlad/git; run python3 exReplic/main.py")
 	exit()
 
 
@@ -187,22 +187,22 @@ projects = [
 	ResearchProject("https://svn.apache.org/repos/asf/commons/proper/validator", Vcs.SVN, 1610469, 20, Management.MVN), 		# 4 WORKS!
 	ResearchProject("https://svn.apache.org/repos/asf/bval", Vcs.SVN, 1598345, 20, Management.MVN),						# 5 Not Downloaded ???? I did download it, but why was it not there in the first place??
 	# ResearchProject("https://svn.apache.org/repos/asf/commons/proper/jxpath", Vcs.SVN, 1564371, 13, Management.ANT), 				# 6 Cloning problem CHECKOUT
-	# ResearchProject("https://github.com/graphhopper/graphhopper",Vcs.GIT,"0e0e311c",20,Management.MVN),						# 7 CAnnot resolve dependencies CHECKOUT
+	ResearchProject("https://github.com/graphhopper/graphhopper",Vcs.GIT,"0e0e311c",20,Management.MVN),						# 7 CAnnot resolve dependencies CHECKOUT
 	# ResearchProject("https://svn.apache.org/repos/asf/river/jtsk", Vcs.SVN, 1520131, 19, Management.ANT), 					# 8
 	ResearchProject("https://svn.apache.org/repos/asf/commons/proper/functor", Vcs.SVN, 1541713, 20, Management.MVN), 		# 9 WORKS!
-	# ResearchProject("https://svn.apache.org/repos/asf/empire-db", Vcs.SVN, 1562914, 20, Management.MVN), 					# 10 WORKS!
-	# ResearchProject("https://github.com/apetresc/JFreeChart", Vcs.GIT, 3070, 20, Management.MVN), 							# 11  GIT DOES NOT know revision 3070
-	# ResearchProject("https://svn.apache.org/repos/asf/commons/proper/collections", Vcs.SVN, 1567759, 20, Management.MVN), 	# 12 WORKS
-	# ResearchProject("https://svn.apache.org/repos/asf/commons/proper/lang", Vcs.SVN, 1568639, 20, Management.MVN), 			# 13 MVN reports build fail, but it seems only tests are failing. ANT does not build at all though
-	# ResearchProject("https://svn.apache.org/repos/asf/commons/proper/configuration", Vcs.SVN, 1571738, 16, Management.MVN), 	# 14 Test failures CHECKOUT
-	# ResearchProject("https://svn.apache.org/repos/asf/pdfbox", Vcs.SVN, 1582785, 20, Management.MVN), 						# 15 Failed on dependencies
-	# ResearchProject("https://github.com/goldmansachs/gs-collections", Vcs.GIT, "6270110e", 20, Management.MVN), 			# 16 WORKS!
-	# ResearchProject("https://svn.apache.org/repos/asf/commons/proper/net", Vcs.SVN, 1584216, 19, Management.MVN), 			# 17 Test fail == the skip year error
-	# ResearchProject("https://github.com/google/closure-compiler", Vcs.GIT, "65401150", 20, Management.MVN), 				# 18 Test Fail == the stack overflow error
-	# ResearchProject("https://svn.apache.org/repos/asf/commons/proper/dbcp", Vcs.SVN, 1573792, 16, Management.MVN), 			# 19 Works!
-	# ResearchProject("https://svn.apache.org/repos/asf/logging/log4j", Vcs.SVN, 1567108, 19, Management.MVN), 				# 20 Works!
-	# ResearchProject("https://git.eclipse.org/r/p/jgit/jgit", Vcs.GIT, "bf33a6ee", 20, Management.MVN), 						# 21 WORKS! 
-	# ResearchProject("https://svn.apache.org/repos/asf/commons/proper/io", Vcs.SVN, 1603493, 20, Management.MVN), 			# 22 Works!
+	ResearchProject("https://svn.apache.org/repos/asf/empire-db", Vcs.SVN, 1562914, 20, Management.MVN), 					# 10 WORKS!
+	ResearchProject("https://github.com/jfree/jfreechart", Vcs.GIT, "093547df273c8a5521e9188ab66cbb7a1609928d", 20, Management.MVN), 							# 11  uses GIT for tracking, but used svn before. Ekstazi did not specify which SHA to use, but I found some old logs, and found the SHA by the date
+	ResearchProject("https://svn.apache.org/repos/asf/commons/proper/collections", Vcs.SVN, 1567759, 20, Management.MVN), 	# 12 WORKS
+	ResearchProject("https://svn.apache.org/repos/asf/commons/proper/lang", Vcs.SVN, 1568639, 20, Management.MVN), 			# 13 MVN reports build fail, but it seems only tests are failing. ANT does not build at all though
+	ResearchProject("https://svn.apache.org/repos/asf/commons/proper/configuration", Vcs.SVN, 1571738, 16, Management.MVN), 	# 14 Test failures CHECKOUT
+	ResearchProject("https://svn.apache.org/repos/asf/pdfbox", Vcs.SVN, 1582785, 20, Management.MVN), 						# 15 Failed on dependencies
+	ResearchProject("https://github.com/goldmansachs/gs-collections", Vcs.GIT, "6270110e", 20, Management.MVN), 			# 16 WORKS!
+	ResearchProject("https://svn.apache.org/repos/asf/commons/proper/net", Vcs.SVN, 1584216, 19, Management.MVN), 			# 17 Test fail == the skip year error
+	ResearchProject("https://github.com/google/closure-compiler", Vcs.GIT, "65401150", 20, Management.MVN), 				# 18 Test Fail == the stack overflow error
+	ResearchProject("https://svn.apache.org/repos/asf/commons/proper/dbcp", Vcs.SVN, 1573792, 16, Management.MVN), 			# 19 Works!
+	ResearchProject("https://svn.apache.org/repos/asf/logging/log4j", Vcs.SVN, 1567108, 19, Management.MVN), 				# 20 Works!
+	ResearchProject("https://git.eclipse.org/r/p/jgit/jgit", Vcs.GIT, "bf33a6ee", 20, Management.MVN), 						# 21 WORKS! 
+	ResearchProject("https://svn.apache.org/repos/asf/commons/proper/io", Vcs.SVN, 1603493, 20, Management.MVN), 			# 22 Works!
 	# ResearchProject("https://svn.apache.org/repos/asf/ant/ivy/core", Vcs.SVN, 1558740, 18, Management.ANT), 				# 23  ANT AND IVY have same 'core' endings so they would fight
 	# ResearchProject("https://github.com/jenkinsci/jenkins", Vcs.GIT, "c826a014", 20, Management.MVN), 					# 24 BUT CAREFUL ONLY "LIGHT" version or something
 	# ResearchProject("https://svn.apache.org/repos/asf/commons/proper/math", Vcs.SVN, 1573523, 20, Management.MVN), 			# 25 Crashed after cloning
