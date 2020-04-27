@@ -39,7 +39,11 @@ def getArgs():
 def getXMLFiles():
 	files = []
 	print("current DIR =",os.getcwd())
-	dirtyFiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    dirtyFiles = None
+    try:
+        dirtyFiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    except FileNotFoundError as e:
+        return None
 
 
 	for f in dirtyFiles:
@@ -74,12 +78,18 @@ data["time"] = getTime(args["execTime"])
 data["mode"] = args["mode"]
 
 files = getXMLFiles()
+if files == None:
+	data["tests"] += 0
+	data["errors"] += 0
+	data["skipped"] += 0
+	data["failed"] += 0
+else:
+    for filePath in files:
+        data = countFile(data,projectPath + "/" + mypath + "/" + filePath)
 
 
 
 
-for filePath in files:
-	data = countFile(data,projectPath + "/" + mypath + "/" + filePath)
 
 print(data)
 

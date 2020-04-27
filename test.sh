@@ -15,10 +15,16 @@ ADDEX="/home/vlad/git/exReplic/addEkstazi.py"
 TIME=""
 LOG=""
 LOGPATH="/home/vlad/git/log.txt"
+EKSTA=0
+SUREFIREFOUND=0
 
 # measures testing time
 timeTest() {
-    TIME="$( (/usr/bin/time -f %e mvn test > /dev/null ) 2>&1)" # trash the stdOUT, catch the error, and send that to TIME
+    if [[ "$EKSTA" -eq 1 ]] ; then
+        TIME="$( (/usr/bin/time -f %e mvn test > /dev/null ) 2>&1)"
+    else
+        TIME="$( (/usr/bin/time -f %e mvn test -Dekstazi.skipme=true > /dev/null ) 2>&1)" # trash the stdOUT, catch the error, and send that to TIME
+    fi
 }
 
 
@@ -32,6 +38,7 @@ count() {
 # In case there are multiple sub projects, it counts them all
 # type of measure
 countSubProjects() {
+    SUREFIREFOUND=0
     for i in $(ls -d */) # list current directories
     do
         pushd ${i%%/} # access $i and cut out the last '/'
@@ -45,6 +52,7 @@ countSubProjects() {
                 ls
                 echo "Surefire found!"
                 count "$1-sub-${i%%/}" "$2"
+                SUREFIREFOUND=1
                 popd # i%% POP
                 continue
             fi
@@ -52,6 +60,14 @@ countSubProjects() {
         fi
         popd # i%% POP
     done
+    if [[ "$SUREFIREFOUND" -eq 0 ]] ; then
+        echo "SUREFIRE NOT FOUND!"
+        echo "SUREFIRE NOT FOUND!"
+        echo "SUREFIRE NOT FOUND!"
+        count "$1-surefireNotFound" "$2"
+
+    fi
+
 
 }
 
@@ -81,6 +97,7 @@ testAndCount() {
                 mvn clean > /dev/null
                 return 0
             fi
+            echo "SUREFIRE NOT FOUND!"
             popd
         fi
         mvn clean > /dev/null
@@ -135,26 +152,20 @@ do
 
             # Ekstazi
             python3 "$ADDEX"
-            
-            # stopSavingDependencies
-
-            # mvn test-compile > /dev/null # Download deps and create "target directories"
-     
-            # testAndCount "$project" "ekstaziAE" # Run AE
-
-            # startSavingDependencies
 
             mvn test > /dev/null # create "target directories"
-            mvn ekstazi:clean > /dev/null
 
+            EKSTA=1
             testAndCount "$project" "ekstaziAEC" # Run AEC
-
-            # stopSavingDependencies
+            EKSTA=0
 
             popd # TRUNK
 
             
         done
+        pushd "trunk"
+        mvn ekstazi:clean
+        popd
 
 
 
@@ -163,13 +174,7 @@ do
         LOG=$(git status)
 
         hashes=($(git log --format=format:%H -n 21)) # print hashes and create an array
-
-
-
-
         firstCommit=(${hashes[0]}) # create an array from first element
-
-
 
         hashes=($(echo "${hashes[@]/$firstCommit}")) # echo hashes wuthout the first commit, then save it as an array. The first hash is 21st one, so we dont want that 
 
@@ -199,30 +204,17 @@ do
 
             python3 "$ADDEX" # add extazi
             
-            # stopSavingDependencies
-
-            # mvn test-compile > /dev/null # Download deps and create "target directories"
-     
-            # testAndCount "$project" "ekstaziAE" # Run AE
-
-
-            # startSavingDependencies
-
             
             mvn test > /dev/null # create "target directories"
-            mvn ekstazi:clean > /dev/null
 
+            EKSTA=1
             testAndCount "$project" "ekstaziAEC" # Run AEC
-
-            # stopSavingDependencies
-
-
-            # git checkout HEAD~
+            EKSTA=0
             git status
         done
+        mvn ekstazi:clean
 
     fi
-    
     popd # PROJECT
 done
 
