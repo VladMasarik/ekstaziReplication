@@ -78,7 +78,7 @@ testAndCount() {
                 timeTest
                 count "$1" "$2"
                 mvn clean > /dev/null
-                exit 0
+                return 0
             fi
             popd
         fi
@@ -144,7 +144,7 @@ do
             # startSavingDependencies
 
             mvn test > /dev/null # create "target directories"
-            mvn ekstazi:clean > dev/null
+            mvn ekstazi:clean > /dev/null
 
             testAndCount "$project" "ekstaziAEC" # Run AEC
 
@@ -209,7 +209,7 @@ do
 
             
             mvn test > /dev/null # create "target directories"
-            mvn ekstazi:clean > dev/null
+            mvn ekstazi:clean > /dev/null
 
             testAndCount "$project" "ekstaziAEC" # Run AEC
 
