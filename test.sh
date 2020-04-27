@@ -21,7 +21,7 @@ SUREFIREFOUND=0
 # measures testing time
 timeTest() {
     if [[ "$EKSTA" -eq 1 ]] ; then
-        TIME="$( (/usr/bin/time -f %e mvn test > /dev/null ) 2>&1)"
+        TIME="$( (/usr/bin/time -f %e mvn test -Dekstazi.parentdir=/home/vlad/git > /dev/null ) 2>&1)"
     else
         TIME="$( (/usr/bin/time -f %e mvn test -Dekstazi.skipme=true > /dev/null ) 2>&1)" # trash the stdOUT, catch the error, and send that to TIME
     fi
@@ -163,7 +163,7 @@ do
             
         done
         pushd "trunk"
-        mvn ekstazi:clean
+        mvn ekstazi:clean -Dekstazi.parentdir=/home/vlad/git
         popd
 
 
@@ -211,7 +211,7 @@ do
             EKSTA=0
             git status
         done
-        mvn ekstazi:clean
+        mvn ekstazi:clean -Dekstazi.parentdir=/home/vlad/git
 
     fi
     popd # PROJECT
