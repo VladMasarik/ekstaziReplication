@@ -97,7 +97,6 @@ testAndCount() {
                 mvn clean > /dev/null
                 return 0
             fi
-            echo "SUREFIRE NOT FOUND!"
             popd
         fi
         mvn clean > /dev/null

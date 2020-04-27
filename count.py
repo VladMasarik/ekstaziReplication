@@ -12,33 +12,33 @@ conn = sqlite3.connect('/home/vlad/git/exReplic/mbm.db')
 c = conn.cursor()
 mypath = "target/surefire-reports"
 data = {
-	"project": "",
-	"time": 0,
-	"tests": 0,
-	"failed": 0,
-	"errors": 0,
-	"skipped": 0,
-	"mode": ""
+    "project": "",
+    "time": 0,
+    "tests": 0,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "mode": ""
 }
 
 
 def getArgs():
-	parser = argparse.ArgumentParser()
-	parser.add_argument("projectName")
-	parser.add_argument("projectPath")
-	parser.add_argument("execTime")
-	parser.add_argument("mode")
-	args = vars(parser.parse_args())
+    parser = argparse.ArgumentParser()
+    parser.add_argument("projectName")
+    parser.add_argument("projectPath")
+    parser.add_argument("execTime")
+    parser.add_argument("mode")
+    args = vars(parser.parse_args())
 
-	print("Arguments =", args)
+    print("Arguments =", args)
 
-	return args
+    return args
 
 
 
 def getXMLFiles():
-	files = []
-	print("current DIR =",os.getcwd())
+    files = []
+    print("current DIR =",os.getcwd())
     dirtyFiles = None
     try:
         dirtyFiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
@@ -46,29 +46,29 @@ def getXMLFiles():
         return None
 
 
-	for f in dirtyFiles:
-		if f.split(".")[-1] == "xml":
-			files.append(f)
+    for f in dirtyFiles:
+        if f.split(".")[-1] == "xml":
+            files.append(f)
 
 
-	return files
+    return files
 
 
 def countFile(data,filePath):
 
-	tree = ET.parse(filePath)
-	root = tree.getroot()
+    tree = ET.parse(filePath)
+    root = tree.getroot()
 
-	# data["time"] += float(root.get("time")) NO need for this as I get time from `time` command
-	data["tests"] += int(root.get("tests"))
-	data["errors"] += int(root.get("errors"))
-	data["skipped"] += int(root.get("skipped"))
-	data["failed"] += int(root.get("failures"))
-	return data
+    # data["time"] += float(root.get("time")) NO need for this as I get time from `time` command
+    data["tests"] += int(root.get("tests"))
+    data["errors"] += int(root.get("errors"))
+    data["skipped"] += int(root.get("skipped"))
+    data["failed"] += int(root.get("failures"))
+    return data
 
 
 def getTime(str):
-	return float(str.split("\n")[-1])
+    return float(str.split("\n")[-1])
 
 args = getArgs()
 data["project"] = args["projectName"]
@@ -79,10 +79,10 @@ data["mode"] = args["mode"]
 
 files = getXMLFiles()
 if files == None:
-	data["tests"] += 0
-	data["errors"] += 0
-	data["skipped"] += 0
-	data["failed"] += 0
+    data["tests"] += 0
+    data["errors"] += 0
+    data["skipped"] += 0
+    data["failed"] += 0
 else:
     for filePath in files:
         data = countFile(data,projectPath + "/" + mypath + "/" + filePath)
