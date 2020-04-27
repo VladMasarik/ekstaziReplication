@@ -3,9 +3,9 @@
 
 set -x
 
-# functor is done
+
 # closure-compiler not working
-declare -a names=( "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval")
+declare -a names=( "functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval")
 
 TRUNK="trunk"
 TARGET="target"
