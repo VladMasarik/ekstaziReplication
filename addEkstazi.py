@@ -4,6 +4,7 @@ def addEkstazi():
 
 
     pomFile = "pom.xml"
+    build = None
 
     # set default namespace
     tree = ET.parse(pomFile) # POM folder
@@ -19,9 +20,15 @@ def addEkstazi():
     root = tree.getroot()
 
     # find plugins element
+    build = root.find("mvn:build",ns)
+    if build is None:
+        build = ET.Element("build")
+        root.append(build)
+    
     plugins = root.find("mvn:build/mvn:plugins",ns)
     if plugins is None:
-        plugins = root.find("mvn:pluginManagement/mvn:plugins",ns )
+        plugins = ET.Element("plugins")
+        build.append(plugins)
 
 
     # Create plugin element

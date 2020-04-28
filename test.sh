@@ -130,6 +130,19 @@ generateTragetAndSurefireReports() {
 
 }
 
+applyEkstazi() {
+
+    python3 "$ADDEX"
+    for fol in $(ls -d */) # list current directories
+    do
+        pushd ${fol%%/} # access $i and cut out the last '/'
+        if [[ -e "pom.xml" ]] ; then
+            python3 "$ADDEX"
+        fi
+        popd
+    done
+}
+
 # ASSUMPTIONS
 # - all the project are in the 21st revision
 
@@ -176,7 +189,7 @@ do
 
 
             # Ekstazi
-            python3 "$ADDEX"
+            applyEkstazi
 
             generateTragetAndSurefireReports
 
@@ -228,7 +241,7 @@ do
             # Ekstazi
             git status
 
-            python3 "$ADDEX" # add extazi
+            applyEkstazi
             
             generateTragetAndSurefireReports
 
