@@ -15,7 +15,7 @@ ADDEX="/home/vlad/git/exReplic/addEkstazi.py"
 TIME=""
 LOG=""
 LOGPATH="/home/vlad/git/log.txt"
-EKSTA=0
+EKSTA=0 #if 1 uses ekstazi and puts the output into /home/vlad/git; 0 does not use ekstazi
 SUREFIREFOUND=0
 
 # measures testing time
@@ -60,6 +60,7 @@ countSubProjects() {
         fi
         popd # i%% POP
     done
+    
     if [[ "$SUREFIREFOUND" -eq 0 ]] ; then
         echo "SUREFIRE NOT FOUND!"
         echo "SUREFIRE NOT FOUND!"
@@ -84,27 +85,50 @@ stopSavingDependencies() {
 # After it is done it cleans up
 # projectName, type of measure
 testAndCount() {
-        if [ -d "$TARGET" ]; then
-            pushd $TARGET
-            pwd
-            ls
-            if [ -d "$SUREFIRE" ]; then
-                popd
-                echo "Surefire found!"
-                mvn clean > /dev/null
-                timeTest
-                count "$1" "$2"
-                mvn clean > /dev/null
-                return 0
-            fi
+    if [ -d "$TARGET" ]; then
+        pushd $TARGET
+        pwd
+        ls
+        if [ -d "$SUREFIRE" ]; then
             popd
+            echo "Surefire found!"
+            echo "Surefire found!"
+            echo "Surefire found!"
+            mvn clean > /dev/null
+            timeTest
+            count "$1" "$2"
+            mvn clean > /dev/null
+            return 0
         fi
-        mvn clean > /dev/null
-        timeTest
-        countSubProjects "$1" "$2"
-        mvn clean > /dev/null
+        echo "############# COuldnt find SUREFIRE in the first COUNT"
+        echo "############# COuldnt find SUREFIRE in the first COUNT"
+        echo "############# COuldnt find SUREFIRE in the first COUNT"
+        echo "############# COuldnt find SUREFIRE in the first COUNT"
+        popd # TARGET
+    fi
+    mvn clean > /dev/null
+    timeTest
+    countSubProjects "$1" "$2"
+    mvn clean > /dev/null
 }
 
+tryCompilingProject() {
+
+    LOG=$(mvn test-compile) #first to see if it compiles
+    if [[ "$?" -ne 0 ]] ; then
+        echo "$LOG" >> $LOGPATH
+        echo "failed to Compile!  SKIPPING project and LOGGING"
+        return 1
+    fi
+    return 0
+}
+
+generateTragetAndSurefireReports() {
+    # then to find the surefire reports, at this point if think scraping out would be better
+    # make sure ekstazi is not executed
+    mvn test -Dekstazi.skipme=true > /dev/null # create "target directories"
+
+}
 
 # ASSUMPTIONS
 # - all the project are in the 21st revision
@@ -117,6 +141,7 @@ do
     if [[ -d "$TRUNK" ]]; then # Case for SVN
         LOG=$(svn info)
         declare -a revisions
+        revisions=()
 
         for temp in {1..20} # get to last revision 
         do	    
@@ -127,6 +152,8 @@ do
 
 
         echo "# # # # # # # # # Starting to test project $project" >> $LOGPATH
+        echo "Possibly number of revisions in the Revision variable"
+        echo ${#revisions[@]}
 
         for (( index=${#revisions[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back because revisions were added incrementally
             pushd "trunk"
@@ -134,15 +161,14 @@ do
             svn revert -R "." # piece of shit svn, I have to revert everything back, before I can get back to the update
             svn update -r "${revisions[index]}"
             svn cleanup --remove-unversioned # see previous cleanup, so I have to do this twice
-            LOG=$(mvn test-compile) #first to see if it compiles
-            mvn test > /dev/null # create "target directories"
-
-
-            if [[ "$?" -ne 0 ]] ; then
-                echo "$LOG" >> $LOGPATH
-                echo "failed to Compile!  SKIPPING project and LOGGING"
+            
+            TMP=tryCompiling
+            if [[ "$TMP" -ne 0 ]] ; then
                 continue
             fi
+            generateTragetAndSurefireReports
+
+
 
             testAndCount "$project" "baseTime"
 
@@ -152,7 +178,7 @@ do
             # Ekstazi
             python3 "$ADDEX"
 
-            mvn test > /dev/null # create "target directories"
+            generateTragetAndSurefireReports
 
             EKSTA=1
             testAndCount "$project" "ekstaziAEC" # Run AEC
@@ -171,6 +197,7 @@ do
 
     else #Case for GIT
         LOG=$(git status)
+        hashes=()
 
         hashes=($(git log --format=format:%H -n 21)) # print hashes and create an array
         firstCommit=(${hashes[0]}) # create an array from first element
@@ -184,15 +211,15 @@ do
 
             git checkout --force "${hashes[index]}"
             git clean -d -x -f # delete untracted files and folder
-            LOG=$(mvn test-compile) #first to see if it compiles
-            mvn test > /dev/null # then to find the surefire reports, at this point if think scraping out would be better
 
-
-            if [[ "$?" -ne 0 ]] ; then
-                echo "$LOG" >> $LOGPATH
-                echo "failed to Compile!  SKIPPING project and LOGGING"
+            TMP=tryCompiling
+            if [[ "$TMP" -ne 0 ]] ; then
                 continue
             fi
+            generateTragetAndSurefireReports
+
+
+
 
             testAndCount "$project" "baseTime"
 
@@ -203,8 +230,7 @@ do
 
             python3 "$ADDEX" # add extazi
             
-            
-            mvn test > /dev/null # create "target directories"
+            generateTragetAndSurefireReports
 
             EKSTA=1
             testAndCount "$project" "ekstaziAEC" # Run AEC
