@@ -2,10 +2,10 @@
 
 
 set -x
-#"functor" "collections"
+#"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io"  DONE
 
 # closure-compiler not working
-declare -a names=( "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval")
+declare -a names=( "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval")
 
 TRUNK="trunk"
 TARGET="target"
