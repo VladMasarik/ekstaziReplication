@@ -2,10 +2,10 @@
 
 
 set -x
-
+#"functor" "collections"
 
 # closure-compiler not working
-declare -a names=( "functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval")
+declare -a names=( "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval")
 
 TRUNK="trunk"
 TARGET="target"
@@ -85,6 +85,8 @@ stopSavingDependencies() {
 # After it is done it cleans up
 # projectName, type of measure
 testAndCount() {
+    mvn clean > /dev/null
+    timeTest
     if [ -d "$TARGET" ]; then
         pushd $TARGET
         pwd
@@ -94,8 +96,6 @@ testAndCount() {
             echo "Surefire found!"
             echo "Surefire found!"
             echo "Surefire found!"
-            mvn clean > /dev/null
-            timeTest
             count "$1" "$2"
             mvn clean > /dev/null
             return 0
@@ -106,8 +106,6 @@ testAndCount() {
         echo "############# COuldnt find SUREFIRE in the first COUNT"
         popd # TARGET
     fi
-    mvn clean > /dev/null
-    timeTest
     countSubProjects "$1" "$2"
     mvn clean > /dev/null
 }
@@ -179,7 +177,7 @@ do
             if [[ "$TMP" -ne 0 ]] ; then
                 continue
             fi
-            generateTragetAndSurefireReports
+            # generateTragetAndSurefireReports
 
 
 
@@ -191,7 +189,7 @@ do
             # Ekstazi
             applyEkstazi
 
-            generateTragetAndSurefireReports
+            # generateTragetAndSurefireReports
 
             EKSTA=1
             testAndCount "$project" "ekstaziAEC" # Run AEC
@@ -229,7 +227,7 @@ do
             if [[ "$TMP" -ne 0 ]] ; then
                 continue
             fi
-            generateTragetAndSurefireReports
+            # generateTragetAndSurefireReports
 
 
 
@@ -243,7 +241,7 @@ do
 
             applyEkstazi
             
-            generateTragetAndSurefireReports
+            # generateTragetAndSurefireReports
 
             EKSTA=1
             testAndCount "$project" "ekstaziAEC" # Run AEC
