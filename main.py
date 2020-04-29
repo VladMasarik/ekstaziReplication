@@ -201,14 +201,6 @@ class ResearchProject():
 
 
 
-#####################################
-#####################################
-#####################################
-# DONT redownload, but rerun!
-    # ResearchProject("https://github.com/google/closure-compiler", Vcs.GIT, "65401150", 20, Management.MVN), 				# 18 Test Fail == the stack overflow error
-#####################################
-#####################################
-#####################################
 
 projects = [
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/jxpath", Vcs.SVN, 1564371, 13, Management.ANT), 				# 6 Cloning problem CHECKOUT
@@ -216,13 +208,14 @@ projects = [
     # ResearchProject("https://svn.apache.org/repos/asf/ant/ivy/core", Vcs.SVN, 1558740, 18, Management.ANT), 				# 23  ANT AND IVY have same 'core' endings so they would fight
     # ResearchProject("https://svn.apache.org/repos/asf/ant/core", Vcs.SVN, 1570454, 20, Management.ANT), 						# 26 Testing reported build fail, but only test errors and failures seem to be present
     # ResearchProject("https://svn.apache.org/repos/asf/zookeeper", Vcs.SVN ,1605517 ,19 , Management.ANT ), 					# 32 Seems to have failed on dependencies; repo2 does not seem to exist, but repo1 is, but it requires https; Execute failed: java.io.IOException: Cannot run program "autoreconf" (in directory "/home/vmasarik/git/zookeeper/trunk/src/c"): error=2, No such file
+    ResearchProject("https://github.com/google/closure-compiler", Vcs.GIT, "65401150", 20, Management.MVN), 				# 18 Test Fail == the stack overflow error
     ResearchProject("https://github.com/jenkinsci/jenkins", Vcs.GIT, "c826a014", 20, Management.MVN), 					# 24 BUT CAREFUL ONLY "LIGHT" version or something
     ResearchProject("https://svn.apache.org/repos/asf/commons/proper/math", Vcs.SVN, 1573523, 20, Management.MVN), 			# 25 Crashed after cloning
     ResearchProject("https://svn.apache.org/repos/asf/continuum", Vcs.SVN, 1534878, 20, Management.MVN),  					# 27 Build failure
     ResearchProject("https://github.com/google/guava", Vcs.GIT ,"af2232f5" ,16 , Management.MVN), 							# 28 Build failure
     ResearchProject("https://git-wip-us.apache.org/repos/asf/camel", Vcs.GIT ,"f6114d52" ,20 , Management.MVN ), 			# 29  CAREFUL ONLY CORE
     ResearchProject("https://git.eclipse.org/r/jetty/org.eclipse.jetty.project.git", Vcs.GIT ,"0f70f288" ,20 , Management.MVN ),# 30 Build failure
-    # ResearchProject("https://github.com/apache/hadoop-common", Vcs.GIT ,"f3043f97" ,20 , Management.MVN ), 				# 31     CAREFUL ONLY CORE
+    ResearchProject("https://github.com/apache/hadoop-common", Vcs.GIT ,"f3043f97" ,20 , Management.MVN ), 				# 31     CAREFUL ONLY CORE
 ]
 
 
@@ -231,7 +224,6 @@ for p in projects:
 
     print("Cloning project", p.name)
     repository = cloneProject(p)
-    continue # remove to and comment out top, to switch
 
     
     print("Switching revision on project", p.name)
