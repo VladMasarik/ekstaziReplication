@@ -156,7 +156,7 @@ do
 
         for temp in {1..20} # get to last revision 
         do	    
-            svn update -r PREV
+            svn update -r PREV --config-option servers:global:http-timeout=100000
             revisions+=($(svn info --show-item revision))
         done
 
@@ -168,10 +168,10 @@ do
 
         for (( index=${#revisions[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back because revisions were added incrementally
             pushd "trunk"
-            svn cleanup --remove-unversioned # good god, if I do a revert it somehow does not delete the shitty branches before
-            svn revert -R "." # piece of shit svn, I have to revert everything back, before I can get back to the update
-            svn update -r "${revisions[index]}"
-            svn cleanup --remove-unversioned # see previous cleanup, so I have to do this twice
+            svn cleanup --remove-unversioned --config-option servers:global:http-timeout=100000 # good god, if I do a revert it somehow does not delete the shitty branches before
+            svn revert -R "." --config-option servers:global:http-timeout=100000 # piece of shit svn, I have to revert everything back, before I can get back to the update
+            svn update -r "${revisions[index]}" --config-option servers:global:http-timeout=100000
+            svn cleanup --remove-unversioned --config-option servers:global:http-timeout=100000 # see previous cleanup, so I have to do this twice
             
             TMP=tryCompiling
             if [[ "$TMP" -ne 0 ]] ; then
