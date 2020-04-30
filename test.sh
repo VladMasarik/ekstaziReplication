@@ -2,10 +2,11 @@
 
 
 set -x
-#"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox"  DONE
+#"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval" DONE
 
-# closure-compiler not working
-declare -a names=( "validator" "retrofit" "cucumber-jvm" "joda-time" "bval")
+# "hadoop-common" "camel" did not test because only core modules need to be tested
+
+declare -a names=( "closure-compiler" "jenkins" "math" "continuum" "guava" "org.eclipse.jetty.project.git")
 
 TRUNK="trunk"
 TARGET="target"
