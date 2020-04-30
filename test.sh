@@ -2,11 +2,11 @@
 
 
 set -x
-#"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval" DONE
+#"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval" "closure-compiler" "jenkins"  DONE
 
 # "hadoop-common" "camel" did not test because only core modules need to be tested
 
-declare -a names=( "closure-compiler" "jenkins" "math" "continuum" "guava" "org.eclipse.jetty.project.git")
+declare -a names=( "math" "continuum" "guava" "org.eclipse.jetty.project.git")
 
 TRUNK="trunk"
 TARGET="target"
