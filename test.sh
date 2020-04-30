@@ -2,11 +2,11 @@
 
 
 set -x
-#"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval" "closure-compiler" "jenkins"  DONE
+#"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval" "closure-compiler" "jenkins" "org.eclipse.jetty.project.git" DONE
 
-# "hadoop-common" "camel" did not test because only core modules need to be tested
-
-declare -a names=( "math" "continuum" "guava" "org.eclipse.jetty.project.git")
+#   did not test because only core modules need to be tested
+# "math" "continuum" "hadoop-common" "guava" problems with building, check it out
+declare -a names=( "camel" )
 
 TRUNK="trunk"
 TARGET="target"
@@ -148,6 +148,7 @@ applyEkstazi() {
 for project in "${names[@]}" 
 do
     pushd "$project"
+    pushd "camel-core"
 
 
     if [[ -d "$TRUNK" ]]; then # Case for SVN
@@ -168,7 +169,7 @@ do
         echo ${#revisions[@]}
 
         for (( index=${#revisions[@]}-1 ; index>=0 ; index-- )) ; do # loop an array from back because revisions were added incrementally
-            pushd "trunk"
+            pushd $TRUNK
             svn cleanup --remove-unversioned --config-option servers:global:http-timeout=100000 # good god, if I do a revert it somehow does not delete the shitty branches before
             svn revert -R "." --config-option servers:global:http-timeout=100000 # piece of shit svn, I have to revert everything back, before I can get back to the update
             svn update -r "${revisions[index]}" --config-option servers:global:http-timeout=100000
@@ -200,7 +201,7 @@ do
 
             
         done
-        pushd "trunk"
+        pushd $TRUNK
         mvn ekstazi:clean -Dekstazi.parentdir=/home/vlad/git
         popd
 
