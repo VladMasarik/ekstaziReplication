@@ -2,7 +2,7 @@
 
 
 
-
+# OLD ==> NEW
 # "9f866d9" "5deb082" "2f6b93c" "383a819" "bd929b8" "901c871" "c41eef8" "ae92a2c" "a493c04" "29cfc80" "5b159bd" "097426a" "c73b7c3" "fc31041" "6275d8a" log4j2 https://github.com/apache/logging-log4j2.git
 # "0f2e883" "4f29be4" "2532484" "f768546" "adfabec" "e6cea45" "9f49624" "a4b438c" "aa183b0" "72c0519" "e7bf735" "4406bcb" "a37e292" "95afbd0" "daf1022" "396b610" "6e6c514" "7e3879a" rxjava https://github.com/ReactiveX/RxJava.git
 
@@ -12,7 +12,7 @@ set -x
 
 #   did not test because only core modules need to be tested
 # "math" "continuum" "hadoop-common" "guava" problems with building, check it out
-declare -a names=(  )
+declare -a names=( "logging-log4j2" )
 
 TRUNK="trunk"
 TARGET="target"
@@ -215,12 +215,12 @@ do
 
     else #Case for GIT
         LOG=$(git status)
-        hashes=()
+        hashes=( "9f866d9" "5deb082" "2f6b93c" "383a819" "bd929b8" "901c871" "c41eef8" "ae92a2c" "a493c04" "29cfc80" "5b159bd" "097426a" "c73b7c3" "fc31041" "6275d8a" )
 
-        hashes=($(git log --format=format:%H -n 21)) # print hashes and create an array
+        # hashes=($(git log --format=format:%H -n 21)) # print hashes and create an array
         firstCommit=(${hashes[0]}) # create an array from first element
 
-        hashes=($(echo "${hashes[@]/$firstCommit}")) # echo hashes wuthout the first commit, then save it as an array. The first hash is 21st one, so we dont want that 
+        # hashes=($(echo "${hashes[@]/$firstCommit}")) # echo hashes wuthout the first commit, then save it as an array. The first hash is 21st one, so we dont want that 
 
 
         echo "# # # # # # # # # Starting to test project $project" >> $LOGPATH
