@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-def addEkstazi():
+def addEkstaziANT():
 
 
     buildFile = "build.xml"
@@ -10,15 +10,6 @@ def addEkstazi():
     tree = ET.parse(buildFile) # POM folder
     root = tree.getroot()
     root.set("xmlns:ekstazi", "antlib:org.ekstazi.ant") # add the NS definition in the root
-
-
-    # Wrap existing junit target elements in Ekstazi select:
-
-    # <ekstazi:select>
-    # <junit fork="true" ...>
-    # ...
-    # </junit>
-    # </ekstazi:select>
 
 
     # <taskdef uri="antlib:org.ekstazi.ant" resource="org/ekstazi/ant/antlib.xml">
@@ -65,58 +56,68 @@ def addEkstazi():
     # write the changes
     tree.write(buildFile) # POM folder
 
-    # ns = {"mvn":root.tag.split("}")[0][1:]}
+def addEkstaziMVN():
+
+
+    buildFile = "POM.xml"
+    build = None
+
+    # set default namespace
+    tree = ET.parse(buildFile) # POM folder
+    root = tree.getroot()
+
+    ns = {"mvn":root.tag.split("}")[0][1:]}
     
 
-    # ET.register_namespace('',ns["mvn"])
+    ET.register_namespace('',ns["mvn"])
 
-    # # re-parse the pom file
-    # tree = ET.parse(buildFile) # POM folder
-    # root = tree.getroot()
+    # re-parse the pom file
+    tree = ET.parse(buildFile) # POM folder
+    root = tree.getroot()
 
-    # # find plugins element
-    # build = root.find("target")
-    # if build is None:
-    #     build = ET.Element("build")
-    #     root.append(build)
+    # find plugins element
+    build = root.find("target")
+    if build is None:
+        build = ET.Element("build")
+        root.append(build)
     
-    # plugins = root.find("mvn:build/mvn:plugins",ns)
-    # if plugins is None:
-    #     plugins = ET.Element("plugins")
-    #     build.append(plugins)
+    plugins = root.find("mvn:build/mvn:plugins",ns)
+    if plugins is None:
+        plugins = ET.Element("plugins")
+        build.append(plugins)
 
 
-    # # Create plugin element
-    # plugin = ET.Element("plugin")
-    # groupId = ET.Element("groupId")
-    # groupId.text = "org.ekstazi"
-    # artifactId = ET.Element("artifactId")
-    # artifactId.text = "ekstazi-maven-plugin"
-    # version = ET.Element("version")
-    # version.text = "5.3.0"
-    # executions = ET.Element("executions")
-    # execution = ET.Element("execution")
-    # id = ET.Element("id")
-    # id.text = "ekstazi"
-    # goals = ET.Element("goals")
-    # goal = ET.Element("goal")
-    # goal.text = "select"
+    # Create plugin element
+    plugin = ET.Element("plugin")
+    groupId = ET.Element("groupId")
+    groupId.text = "org.ekstazi"
+    artifactId = ET.Element("artifactId")
+    artifactId.text = "ekstazi-maven-plugin"
+    version = ET.Element("version")
+    version.text = "5.3.0"
+    executions = ET.Element("executions")
+    execution = ET.Element("execution")
+    id = ET.Element("id")
+    id.text = "ekstazi"
+    goals = ET.Element("goals")
+    goal = ET.Element("goal")
+    goal.text = "select"
 
-    # goals.append(goal)
-    # execution.append(id)
-    # execution.append(goals)
-    # executions.append(execution)
-    # plugin.append(executions)
-    # plugin.append(version)
-    # plugin.append(artifactId)
-    # plugin.append(groupId)
+    goals.append(goal)
+    execution.append(id)
+    execution.append(goals)
+    executions.append(execution)
+    plugin.append(executions)
+    plugin.append(version)
+    plugin.append(artifactId)
+    plugin.append(groupId)
 
-    # plugins.append(plugin)
-
-
-    # exit() # REMOVEE@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    # # write the changes
-    # tree.write(buildFile) # POM folder
+    plugins.append(plugin)
 
 
-addEkstazi()
+    exit() # REMOVEE@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    # write the changes
+    tree.write(buildFile) # POM folder
+
+# addEkstaziANT()
+addEkstaziMVN()
