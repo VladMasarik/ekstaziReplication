@@ -27,7 +27,7 @@ def addEkstazi():
     # </taskdef>
 
     for tag in root.findall("target"):
-        if tag.get("name") == "junit.run":
+        if tag.get("name") == "test": # junit.run
             targetTag = tag
             break
 
