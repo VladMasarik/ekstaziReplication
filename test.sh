@@ -148,7 +148,6 @@ applyEkstazi() {
 for project in "${names[@]}" 
 do
     pushd "$project"
-    pushd "camel-core"
 
 
     if [[ -d "$TRUNK" ]]; then # Case for SVN
