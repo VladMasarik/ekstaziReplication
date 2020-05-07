@@ -19,7 +19,9 @@ def addEkstazi():
 
     ekstazi = None
     for t in targetTag:
+        print(t.tag)
         if t.tag == "{{antlib:org.ekstazi.ant}}select":
+            print(t)
             ekstazi = t
 
 
