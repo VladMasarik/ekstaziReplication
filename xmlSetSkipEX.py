@@ -18,10 +18,9 @@ def addEkstazi():
             break
 
     for t in targetTag:
-        print(t)
-        print(t.tag)
+        if t.tag == "{{antlib:org.ekstazi.ant}}select":
+            ekstazi = t
 
-    ekstazi = targetTag.find("{{antlib:org.ekstazi.ant}}select")
 
     ekstazi.set("skipme", "true")
     
