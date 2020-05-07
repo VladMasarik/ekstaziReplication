@@ -10,7 +10,8 @@ import argparse
 
 conn = sqlite3.connect('/home/vlad/git/exReplic/mbm.db')
 c = conn.cursor()
-mypath = "target/surefire-reports"
+# mypath = "target/surefire-reports" For Maven
+mypath = "test/results"
 data = {
     "project": "",
     "time": 0,

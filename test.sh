@@ -1,12 +1,13 @@
 #!/bin/bash
 
+# sed -i -e 's/<ekstazi:select>/<ekstazi:select skipme="true">/' build.xml
 
 set -x
-#"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval" "closure-compiler" "jenkins" "org.eclipse.jetty.project.git" DONE
+#"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval" "closure-compiler" "jenkins" "org.eclipse.jetty.project.git" "camel" DONE
 
 #   did not test because only core modules need to be tested
 # "math" "continuum" "hadoop-common" "guava" problems with building, check it out
-declare -a names=( "camel" )
+declare -a names=( "jtsk" )
 
 TRUNK="trunk"
 TARGET="target"
@@ -33,7 +34,7 @@ timeTest() {
 # executes counting script
 # projectName, type of measure
 count() {
-    python3 "$COUNT" "$1" "$(pwd)" "$TIME" "$2"
+    python3 "$COUNT" "$1" "$(pwd)" "$TIME" "$2" # 1 = project name; 2 = base or Ekstazi label
 }
 
 # In case there are multiple sub projects, it counts them all
@@ -86,29 +87,37 @@ stopSavingDependencies() {
 # After it is done it cleans up
 # projectName, type of measure
 testAndCount() {
-    mvn clean > /dev/null
-    timeTest
-    if [ -d "$TARGET" ]; then
-        pushd $TARGET
-        pwd
-        ls
-        if [ -d "$SUREFIRE" ]; then
-            popd
-            echo "Surefire found!"
-            echo "Surefire found!"
-            echo "Surefire found!"
-            count "$1" "$2"
-            mvn clean > /dev/null
-            return 0
-        fi
-        echo "############# COuldnt find SUREFIRE in the first COUNT"
-        echo "############# COuldnt find SUREFIRE in the first COUNT"
-        echo "############# COuldnt find SUREFIRE in the first COUNT"
-        echo "############# COuldnt find SUREFIRE in the first COUNT"
-        popd # TARGET
+    # mvn clean > /dev/null
+    ant all.clean > /dev/null
+    
+    # timeTest
+
+    if [[ "$EKSTA" -eq 1 ]] ; then
+        mv /home/vlad/git/.ekstazi .
+        TIME="$( (/usr/bin/time -f %e ant test > /dev/null ) 2>&1)"
+        mv .ekstazi /home/vlad/git
+    else
+        sed -i -e 's/skipme="false"/skipme="true">/' build.xml
+        TIME="$( (/usr/bin/time -f %e ant test > /dev/null ) 2>&1)" # trash the stdOUT, catch the error, and send that to TIME
+        sed -i -e 's/skipme="true"/skipme="false">/' build.xml
     fi
-    countSubProjects "$1" "$2"
-    mvn clean > /dev/null
+
+
+    if [ -d "test" ]; then
+        pushd "test"
+        if [ -d "resutls" ]; then
+            popd
+            count "$1" "$2"
+        else
+            echo "RESULTS NOT FOUND!!!"
+            echo "RESULTS NOT FOUND!!!"
+            echo "RESULTS NOT FOUND!!!"
+            echo "RESULTS NOT FOUND!!!"
+            popd
+            count "$1-surefireNotFound" "$2"
+        fi
+    fi
+    ant all.clean > /dev/null
 }
 
 tryCompilingProject() {
@@ -174,10 +183,11 @@ do
             svn update -r "${revisions[index]}" --config-option servers:global:http-timeout=100000
             svn cleanup --remove-unversioned --config-option servers:global:http-timeout=100000 # see previous cleanup, so I have to do this twice
             
-            TMP=tryCompiling
-            if [[ "$TMP" -ne 0 ]] ; then
-                continue
-            fi
+            # TMP=tryCompiling
+            # if [[ "$TMP" -ne 0 ]] ; then
+            #     continue
+            # fi
+
             # generateTragetAndSurefireReports
 
 
@@ -188,7 +198,9 @@ do
 
 
             # Ekstazi
-            applyEkstazi
+            python3 "$ADDEX" # has to go before the first sed
+            sed -i -e 's/<ekstazi:select>/<ekstazi:select skipme="false">/' build.xml
+            # applyEkstazi
 
             # generateTragetAndSurefireReports
 
@@ -201,7 +213,8 @@ do
             
         done
         pushd $TRUNK
-        mvn ekstazi:clean -Dekstazi.parentdir=/home/vlad/git
+        # mvn ekstazi:clean -Dekstazi.parentdir=/home/vlad/git MAVEN
+        rm -rf /home/vlad/git/.ekstazi # ANT
         popd
 
 
