@@ -17,7 +17,7 @@ def addEkstazi():
             targetTag = tag
             break
 
-    ekstazi = targetTag.find("ekstazi:select")
+    ekstazi = targetTag.find("select")
     ekstazi.set("skipme", "true")
     
     tree.write(buildFile) # POM folder
