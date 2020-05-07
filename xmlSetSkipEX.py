@@ -1,0 +1,29 @@
+import xml.etree.ElementTree as ET
+
+def addEkstazi():
+
+
+    buildFile = "build.xml"
+    build = None
+
+    # set default namespace
+    tree = ET.parse(buildFile) # POM folder
+    root = tree.getroot()
+    root.set("xmlns:ekstazi", "antlib:org.ekstazi.ant") # add the NS definition in the root
+
+
+    for tag in root.findall("target"):
+        if tag.get("name") == "test": # junit.run
+            targetTag = tag
+            break
+
+
+
+    ekstazi = targetTag.find("ekstazi:select")
+    ekstazi = ET.Element("ekstazi:select")
+
+    tree.write(buildFile) # POM folder
+
+
+
+addEkstazi()
