@@ -9,20 +9,24 @@ def addEkstazi():
     # set default namespace
     tree = ET.parse(buildFile) # POM folder
     root = tree.getroot()
-    root.set("xmlns:ekstazi", "antlib:org.ekstazi.ant") # add the NS definition in the root
 
+    ns = {"mvn":root.tag.split("}")[0][1:]}
+    
+
+    ET.register_namespace('',ns["mvn"])
 
     for tag in root.findall("target"):
         if tag.get("name") == "test": # junit.run
             targetTag = tag
             break
 
-    ekstazi = None
-    for t in targetTag:
-        print(t.tag)
-        if t.tag == "{{antlib:org.ekstazi.ant}}select":
-            print(t)
-            ekstazi = t
+
+    ekstazi = root.find("ekstazi:select",ns)
+    # for t in targetTag:
+    #     print(t.tag)
+    #     if t.tag == "{{antlib:org.ekstazi.ant}}select":
+    #         print(t)
+    #         ekstazi = t
 
 
     ekstazi.set("skipme", "true")
