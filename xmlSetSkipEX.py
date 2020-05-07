@@ -21,7 +21,7 @@ def addEkstazi():
         print(t)
         print(t.tag)
 
-    ekstazi = targetTag.find("select")
+    ekstazi = targetTag.find("{{antlib:org.ekstazi.ant}}select")
 
     ekstazi.set("skipme", "true")
     
