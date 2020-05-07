@@ -17,6 +17,7 @@ def addEkstazi():
             targetTag = tag
             break
 
+    ekstazi = None
     for t in targetTag:
         if t.tag == "{{antlib:org.ekstazi.ant}}select":
             ekstazi = t
