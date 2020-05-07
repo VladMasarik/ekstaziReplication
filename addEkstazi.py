@@ -56,6 +56,8 @@ def addEkstazi():
 
     ekstazi = ET.Element("ekstazi:select")
     junit = targetTag.find("junit")
+    if junit.get("fork") != "yes":
+        junit.set("fork","yes")
     targetTag.remove(junit)
     ekstazi.append(junit)
     targetTag.append(ekstazi)
