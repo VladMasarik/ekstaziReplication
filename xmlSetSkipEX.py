@@ -17,10 +17,15 @@ def addEkstazi():
             targetTag = tag
             break
 
+    for t in targetTag:
+        print(t)
+        print(t.tag)
+
     ekstazi = targetTag.find("select")
+
     ekstazi.set("skipme", "true")
     
-    tree.write(buildFile) # POM folder
+    # tree.write(buildFile) # POM folder
 
 
 
