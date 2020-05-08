@@ -176,7 +176,7 @@ do
         # REPLACE TO 20 #$#$#$#$#$#$#$#$#$#$#$
         # REPLACE TO 20 #$#$#$#$#$#$#$#$#$#$#$
 
-        for temp in {1..5} # get to last revision  
+        for temp in {1..20} # get to last revision  
         do	    
             svn update -r PREV --config-option servers:global:http-timeout=100000
             revisions+=($(svn info --show-item revision))
