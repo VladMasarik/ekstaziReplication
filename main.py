@@ -212,14 +212,14 @@ class ResearchProject():
 
 
 
+    # ResearchProject("https://svn.apache.org/repos/asf/river/jtsk", Vcs.SVN, 1520131, 19, Management.ANT), 					# 8
 
 
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/jxpath", Vcs.SVN, 1564371, 13, Management.MVN), 				# 6 Actually capable fo building with maven
     # ResearchProject("https://svn.apache.org/repos/asf/ant/ivy/core", Vcs.SVN, 1558740, 18, Management.ANT), 				# 23  ANT AND IVY have same 'core' endings so they would fight
 projects = [
-    ResearchProject("https://svn.apache.org/repos/asf/river/jtsk", Vcs.SVN, 1520131, 19, Management.ANT), 					# 8
     ResearchProject("https://svn.apache.org/repos/asf/ant/core", Vcs.SVN, 1570454, 20, Management.ANT), 						# 26 Testing reported build fail, but only test errors and failures seem to be present
-    ResearchProject("https://svn.apache.org/repos/asf/zookeeper", Vcs.SVN ,1605517 ,19 , Management.ANT ), 					# 32 Seems to have failed on dependencies; repo2 does not seem to exist, but repo1 is, but it requires https; Execute failed: java.io.IOException: Cannot run program "autoreconf" (in directory "/home/vmasarik/git/zookeeper/trunk/src/c"): error=2, No such file
+    # ResearchProject("https://svn.apache.org/repos/asf/zookeeper", Vcs.SVN ,1605517 ,19 , Management.ANT ), 					# 32 Seems to have failed on dependencies; repo2 does not seem to exist, but repo1 is, but it requires https; Execute failed: java.io.IOException: Cannot run program "autoreconf" (in directory "/home/vmasarik/git/zookeeper/trunk/src/c"): error=2, No such file
 ]
 
 

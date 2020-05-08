@@ -4,10 +4,11 @@
 
 set -x
 #"functor" "collections" "configuration" "dbcp" "empire-db" "graphhopper" "gs-collections" "io" "jfreechart" "jgit" "lang" "log4j" "net" "pdfbox" "validator" "retrofit" "cucumber-jvm" "joda-time" "bval" "closure-compiler" "jenkins" "org.eclipse.jetty.project.git" "camel" DONE
+# " jtsk" DONE
 
 #   did not test because only core modules need to be tested
 # "math" "continuum" "hadoop-common" "guava" problems with building, check it out
-declare -a names=( "jtsk" )
+declare -a names=( "core" )
 
 TRUNK="trunk"
 TARGET="target"
