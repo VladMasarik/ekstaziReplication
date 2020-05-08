@@ -179,11 +179,9 @@ class ResearchProject():
 
 
 
-    # ResearchProject("https://github.com/cucumber/cucumber-jvm", Vcs.GIT, "5df09f85", 20, Management.MVN),					# 1 TEST failed CHECKOUT
     # ResearchProject("https://github.com/JodaOrg/joda-time", Vcs.GIT, "f17223a4", 20, Management.MVN), 						# 2 Test failures CHECKOUT
     # ResearchProject("https://github.com/square/retrofit", Vcs.GIT, "810bb53e", 20, Management.MVN),							# 3 WORKS!
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/validator", Vcs.SVN, 1610469, 20, Management.MVN), 		# 4 WORKS!
-    # ResearchProject("https://svn.apache.org/repos/asf/bval", Vcs.SVN, 1598345, 20, Management.MVN),						# 5 Not Downloaded ???? I did download it, but why was it not there in the first place??
     # ResearchProject("https://github.com/graphhopper/graphhopper",Vcs.GIT,"0e0e311c",20,Management.MVN),						# 7 CAnnot resolve dependencies CHECKOUT
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/functor", Vcs.SVN, 1541713, 20, Management.MVN), 		# 9 WORKS!
     # ResearchProject("https://svn.apache.org/repos/asf/empire-db", Vcs.SVN, 1562914, 20, Management.MVN), 					# 10 WORKS!
@@ -191,35 +189,38 @@ class ResearchProject():
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/collections", Vcs.SVN, 1567759, 20, Management.MVN), 	# 12 WORKS
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/lang", Vcs.SVN, 1568639, 20, Management.MVN), 			# 13 MVN reports build fail, but it seems only tests are failing. ANT does not build at all though
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/configuration", Vcs.SVN, 1571738, 16, Management.MVN), 	# 14 Test failures CHECKOUT
-    # ResearchProject("https://svn.apache.org/repos/asf/pdfbox", Vcs.SVN, 1582785, 20, Management.MVN), 						# 15 Failed on dependencies
     # ResearchProject("https://github.com/goldmansachs/gs-collections", Vcs.GIT, "6270110e", 20, Management.MVN), 			# 16 WORKS!
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/net", Vcs.SVN, 1584216, 19, Management.MVN), 			# 17 Test fail == the skip year error
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/dbcp", Vcs.SVN, 1573792, 16, Management.MVN), 			# 19 Works!
     # ResearchProject("https://svn.apache.org/repos/asf/logging/log4j", Vcs.SVN, 1567108, 19, Management.MVN), 				# 20 Works!
-    # ResearchProject("https://git.eclipse.org/r/p/jgit/jgit", Vcs.GIT, "bf33a6ee", 20, Management.MVN), 						# 21 WORKS! 
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/io", Vcs.SVN, 1603493, 20, Management.MVN), 			# 22 Works!
 
 
 
     # ResearchProject("https://github.com/google/closure-compiler", Vcs.GIT, "65401150", 20, Management.MVN), 				# 18 Test Fail == the stack overflow error
-    # ResearchProject("https://github.com/jenkinsci/jenkins", Vcs.GIT, "c826a014", 20, Management.MVN), 					# 24 BUT CAREFUL ONLY "LIGHT" version or something
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/math", Vcs.SVN, 1573523, 20, Management.MVN), 			# 25 Crashed after cloning
     # ResearchProject("https://svn.apache.org/repos/asf/continuum", Vcs.SVN, 1534878, 20, Management.MVN),  					# 27 Build failure
     # ResearchProject("https://github.com/google/guava", Vcs.GIT ,"af2232f5" ,16 , Management.MVN), 							# 28 Build failure
     # ResearchProject("https://git-wip-us.apache.org/repos/asf/camel", Vcs.GIT ,"f6114d52" ,20 , Management.MVN ), 			# 29  CAREFUL ONLY CORE
-    # ResearchProject("https://git.eclipse.org/r/jetty/org.eclipse.jetty.project.git", Vcs.GIT ,"0f70f288" ,20 , Management.MVN ),# 30 Build failure
     # ResearchProject("https://github.com/apache/hadoop-common", Vcs.GIT ,"f3043f97" ,20 , Management.MVN ), 				# 31     CAREFUL ONLY CORE
+    # ResearchProject("https://svn.apache.org/repos/asf/river/jtsk", Vcs.SVN, 1520131, 19, Management.ANT), 					# 8 WORKS
+    # ResearchProject("https://svn.apache.org/repos/asf/zookeeper", Vcs.SVN ,1605517 ,19 , Management.ANT ), 					# 32 Seems to have failed on dependencies; repo2 does not seem to exist, but repo1 is, but it requires https; Execute failed: java.io.IOException: Cannot run program "autoreconf" (in directory "/home/vmasarik/git/zookeeper/trunk/src/c"): error=2, No such file
+    # ResearchProject("https://svn.apache.org/repos/asf/ant/core", Vcs.SVN, 1570454, 20, Management.ANT), 						# 26 Testing reported build fail, but only test errors and failures seem to be present; failer because i am missing dependencies but fuck that shit
+    # ResearchProject("https://svn.apache.org/repos/asf/ant/ivy/core", Vcs.SVN, 1558740, 18, Management.ANT), 				# 23  ANT AND IVY have same 'core' endings so they would fight
 
 
+    # ResearchProject("https://github.com/jenkinsci/jenkins", Vcs.GIT, "c826a014", 20, Management.MVN), 					# 24 BUT CAREFUL ONLY "LIGHT" version or something
+    # ResearchProject("https://git.eclipse.org/r/jetty/org.eclipse.jetty.project.git", Vcs.GIT ,"0f70f288" ,20 , Management.MVN ),# 30 Build failure
+    # ResearchProject("https://svn.apache.org/repos/asf/bval", Vcs.SVN, 1598345, 20, Management.MVN),						# 5 Not Downloaded ???? I did download it, but why was it not there in the first place??
+    # ResearchProject("https://git.eclipse.org/r/p/jgit/jgit", Vcs.GIT, "bf33a6ee", 20, Management.MVN), 						# 21 WORKS! 
+    # ResearchProject("https://svn.apache.org/repos/asf/pdfbox", Vcs.SVN, 1582785, 20, Management.MVN), 						# 15 Failed on dependencies
+    # ResearchProject("https://github.com/cucumber/cucumber-jvm", Vcs.GIT, "5df09f85", 20, Management.MVN),					# 1 TEST failed CHECKOUT
 
 
 
     # ResearchProject("https://svn.apache.org/repos/asf/ant/ivy/core", Vcs.SVN, 1558740, 18, Management.ANT), 				# 23  ANT AND IVY have same 'core' endings so they would fight
 projects = [
-    # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/jxpath", Vcs.SVN, 1564371, 13, Management.ANT), 				# 6 Cloning problem CHECKOUT
-    # ResearchProject("https://svn.apache.org/repos/asf/river/jtsk", Vcs.SVN, 1520131, 19, Management.ANT), 					# 8
-    ResearchProject("https://svn.apache.org/repos/asf/ant/core", Vcs.SVN, 1570454, 20, Management.ANT), 						# 26 Testing reported build fail, but only test errors and failures seem to be present
-    ResearchProject("https://svn.apache.org/repos/asf/zookeeper", Vcs.SVN ,1605517 ,19 , Management.ANT ), 					# 32 Seems to have failed on dependencies; repo2 does not seem to exist, but repo1 is, but it requires https; Execute failed: java.io.IOException: Cannot run program "autoreconf" (in directory "/home/vmasarik/git/zookeeper/trunk/src/c"): error=2, No such file
+    # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/jxpath", Vcs.SVN, 1564371, 13, Management.MVN), 				# 6 Actually capable fo building with maven
 ]
 
 
