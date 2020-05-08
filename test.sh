@@ -203,7 +203,9 @@ do
 
             # generateTragetAndSurefireReports
 
-
+            # Has to add ekstazi before testing, because I use a script that disables it if the ekstazi is not supposed to be run
+            python3 "$ADDEX" # has to go before the first sed
+            sed -i -e 's/<ekstazi:select>/<ekstazi:select skipme="false">/' build.xml
 
             testAndCount "$project" "baseTime"
 
@@ -211,8 +213,6 @@ do
 
 
             # Ekstazi
-            python3 "$ADDEX" # has to go before the first sed
-            sed -i -e 's/<ekstazi:select>/<ekstazi:select skipme="false">/' build.xml
             # applyEkstazi
 
             # generateTragetAndSurefireReports
