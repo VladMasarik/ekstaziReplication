@@ -220,15 +220,15 @@ class ResearchProject():
 
     # ResearchProject("https://svn.apache.org/repos/asf/ant/ivy/core", Vcs.SVN, 1558740, 18, Management.ANT), 				# 23  ANT AND IVY have same 'core' endings so they would fight
 projects = [
-    # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/jxpath", Vcs.SVN, 1564371, 13, Management.MVN), 				# 6 Actually capable fo building with maven
+    ResearchProject("https://svn.apache.org/repos/asf/commons/proper/jxpath", Vcs.SVN, 1564371, 13, Management.MVN), 				# 6 Actually capable fo building with maven
 ]
 
 
 
 for p in projects:
 
-    print("Cloning project", p.name)
-    repository = cloneProject(p)
+    # print("Cloning project", p.name)
+    # repository = cloneProject(p)
 
     
     print("Switching revision on project", p.name)
