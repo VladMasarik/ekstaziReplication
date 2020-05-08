@@ -226,8 +226,8 @@ projects = [
 
 for p in projects:
 
-    # print("Cloning project", p.name)
-    # repository = cloneProject(p)
+    print("Cloning project", p.name)
+    repository = cloneProject(p)
 
     
     print("Switching revision on project", p.name)
