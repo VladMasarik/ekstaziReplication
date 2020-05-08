@@ -97,9 +97,9 @@ testAndCount() {
         TIME="$( (/usr/bin/time -f %e ant test > /dev/null ) 2>&1)"
         mv .ekstazi /home/vlad/git
     else
-        sed -i -e 's/skipme="false"/skipme="true">/' build.xml
+        sed -i -e 's/skipme="false"/skipme="true"/' build.xml
         TIME="$( (/usr/bin/time -f %e ant test > /dev/null ) 2>&1)" # trash the stdOUT, catch the error, and send that to TIME
-        sed -i -e 's/skipme="true"/skipme="false">/' build.xml
+        sed -i -e 's/skipme="true"/skipme="false"/' build.xml
     fi
 
 
