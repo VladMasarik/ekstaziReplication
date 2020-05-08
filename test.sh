@@ -151,6 +151,8 @@ applyEkstazi() {
     done
 }
 
+
+rm -rf /home/vlad/git/.ekstazi
 # ASSUMPTIONS
 # - all the project are in the 21st revision
 
