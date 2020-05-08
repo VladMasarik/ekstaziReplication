@@ -194,7 +194,6 @@ do
             svn revert -R "." --config-option servers:global:http-timeout=100000 # piece of shit svn, I have to revert everything back, before I can get back to the update
             svn update -r "${revisions[index]}" --config-option servers:global:http-timeout=100000
             svn cleanup --remove-unversioned --config-option servers:global:http-timeout=100000 # see previous cleanup, so I have to do this twice
-            exit 0
             
             # TMP=tryCompiling
             # if [[ "$TMP" -ne 0 ]] ; then
