@@ -105,7 +105,7 @@ testAndCount() {
 
     if [ -d "test" ]; then
         pushd "test"
-        if [ -d "resutls" ]; then
+        if [ -d "results" ]; then
             popd
             count "$1" "$2"
         else
