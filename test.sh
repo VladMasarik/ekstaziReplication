@@ -12,7 +12,7 @@ set -x
 
 #   did not test because only core modules need to be tested
 # "math" "continuum" "hadoop-common" "guava" problems with building, check it out
-declare -a names=( "logging-log4j2" )
+declare -a names=( "" )
 
 TRUNK="trunk"
 TARGET="target"
@@ -215,12 +215,12 @@ do
 
     else #Case for GIT
         LOG=$(git status)
-        hashes=( "9f866d9" "5deb082" "2f6b93c" "383a819" "bd929b8" "901c871" "c41eef8" "ae92a2c" "a493c04" "29cfc80" "5b159bd" "097426a" "c73b7c3" "fc31041" "6275d8a" )
+        hashes=()
 
-        # hashes=($(git log --format=format:%H -n 21)) # print hashes and create an array
+        hashes=($(git log --format=format:%H -n 21)) # print hashes and create an array
         firstCommit=(${hashes[0]}) # create an array from first element
 
-        # hashes=($(echo "${hashes[@]/$firstCommit}")) # echo hashes wuthout the first commit, then save it as an array. The first hash is 21st one, so we dont want that 
+        hashes=($(echo "${hashes[@]/$firstCommit}")) # echo hashes wuthout the first commit, then save it as an array. The first hash is 21st one, so we dont want that 
 
 
         echo "# # # # # # # # # Starting to test project $project" >> $LOGPATH
