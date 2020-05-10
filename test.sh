@@ -28,9 +28,9 @@ SUREFIREFOUND=0
 # measures testing time
 timeTest() {
     if [[ "$EKSTA" -eq 1 ]] ; then
-        TIME="$( (/usr/bin/time -f %e mvn test -Dekstazi.parentdir=/home/vlad/git > /dev/null ) 2>&1)"
+        TIME="$( (/usr/bin/time -f %e mvn test -Dekstazi.parentdir=/home/vlad/git ) 2>&1)"
     else
-        TIME="$( (/usr/bin/time -f %e mvn test -Dekstazi.skipme=true > /dev/null ) 2>&1)" # trash the stdOUT, catch the error, and send that to TIME
+        TIME="$( (/usr/bin/time -f %e mvn test -Dekstazi.skipme=true ) 2>&1)" # trash the stdOUT, catch the error, and send that to TIME
     fi
 }
 
