@@ -194,6 +194,7 @@ class ResearchProject():
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/dbcp", Vcs.SVN, 1573792, 16, Management.MVN), 			# 19 Works!
     # ResearchProject("https://svn.apache.org/repos/asf/logging/log4j", Vcs.SVN, 1567108, 19, Management.MVN), 				# 20 Works!
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/io", Vcs.SVN, 1603493, 20, Management.MVN), 			# 22 Works!
+    # ResearchProject("https://git.eclipse.org/r/p/jgit/jgit", Vcs.GIT, "bf33a6ee", 20, Management.MVN), 						# 21 WORKS! 
 
 
 
@@ -212,15 +213,14 @@ class ResearchProject():
     # ResearchProject("https://github.com/jenkinsci/jenkins", Vcs.GIT, "c826a014", 20, Management.MVN), 					# 24 BUT CAREFUL ONLY "LIGHT" version or something
     # ResearchProject("https://git.eclipse.org/r/jetty/org.eclipse.jetty.project.git", Vcs.GIT ,"0f70f288" ,20 , Management.MVN ),# 30 Build failure
     # ResearchProject("https://svn.apache.org/repos/asf/bval", Vcs.SVN, 1598345, 20, Management.MVN),						# 5 Not Downloaded ???? I did download it, but why was it not there in the first place??
+    # ResearchProject("https://github.com/cucumber/cucumber-jvm", Vcs.GIT, "5df09f85", 20, Management.MVN),					# 1 TEST failed CHECKOUT
 
 
 
 
 
 projects = [
-    ResearchProject("https://git.eclipse.org/r/p/jgit/jgit", Vcs.GIT, "bf33a6ee", 20, Management.MVN), 						# 21 WORKS! 
     ResearchProject("https://svn.apache.org/repos/asf/pdfbox", Vcs.SVN, 1582785, 20, Management.MVN), 						# 15 Failed on dependencies
-    ResearchProject("https://github.com/cucumber/cucumber-jvm", Vcs.GIT, "5df09f85", 20, Management.MVN),					# 1 TEST failed CHECKOUT
 ]
 
 
