@@ -59,7 +59,7 @@ def addEkstaziANT():
 def addEkstaziMVN():
 
 
-    buildFile = "POM.xml"
+    buildFile = "pom.xml"
     build = None
 
     # set default namespace
@@ -115,7 +115,6 @@ def addEkstaziMVN():
     plugins.append(plugin)
 
 
-    exit() # REMOVEE@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # write the changes
     tree.write(buildFile) # POM folder
 
