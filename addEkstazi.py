@@ -76,7 +76,7 @@ def addEkstaziMVN():
     root = tree.getroot()
 
     # find plugins element
-    build = root.find("target")
+    build = root.find("mvn:build",ns)
     if build is None:
         build = ET.Element("build")
         root.append(build)
