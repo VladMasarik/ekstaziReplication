@@ -12,7 +12,7 @@ set -x
 
 #   did not test because only core modules need to be tested
 # "math" "continuum" "hadoop-common" "guava" problems with building, check it out
-declare -a names=( "camel" "jfreechart" )
+declare -a names=( "jfreechart" )
 
 TRUNK="trunk"
 TARGET="target"

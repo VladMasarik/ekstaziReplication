@@ -213,13 +213,13 @@ class ResearchProject():
     # ResearchProject("https://svn.apache.org/repos/asf/bval", Vcs.SVN, 1598345, 20, Management.MVN),						# 5 Not Downloaded ???? I did download it, but why was it not there in the first place??
     # ResearchProject("https://github.com/cucumber/cucumber-jvm", Vcs.GIT, "5df09f85", 20, Management.MVN),					# 1 TEST failed CHECKOUT
     # ResearchProject("https://svn.apache.org/repos/asf/pdfbox", Vcs.SVN, 1582785, 20, Management.MVN), 						# 15 Failed on dependencies
+    # ResearchProject("https://git-wip-us.apache.org/repos/asf/camel", Vcs.GIT ,"f6114d52" ,20 , Management.MVN ), 			# 29  CAREFUL ONLY CORE
 
 
 
 
 
 projects = [
-    ResearchProject("https://git-wip-us.apache.org/repos/asf/camel", Vcs.GIT ,"f6114d52" ,20 , Management.MVN ), 			# 29  CAREFUL ONLY CORE
     ResearchProject("https://github.com/jfree/jfreechart", Vcs.GIT, "093547df273c8a5521e9188ab66cbb7a1609928d", 20, Management.MVN), 							# 11  uses GIT for tracking, but used svn before. Ekstazi did not specify which SHA to use, but I found some old logs, and found the SHA by the date
 ]
 
