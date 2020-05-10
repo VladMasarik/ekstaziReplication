@@ -210,13 +210,13 @@ class ResearchProject():
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/jxpath", Vcs.SVN, 1564371, 13, Management.MVN), 				# 6 Actually capable fo building with maven
     # ResearchProject("https://svn.apache.org/repos/asf/ant/ivy/core", Vcs.SVN, 1558740, 18, Management.ANT), 				# 23  ANT AND IVY have same 'core' endings so they would fight
     # ResearchProject("https://github.com/jenkinsci/jenkins", Vcs.GIT, "c826a014", 20, Management.MVN), 					# 24 BUT CAREFUL ONLY "LIGHT" version or something
+    # ResearchProject("https://git.eclipse.org/r/jetty/org.eclipse.jetty.project.git", Vcs.GIT ,"0f70f288" ,20 , Management.MVN ),# 30 Build failure
 
 
 
 
 
 projects = [
-    ResearchProject("https://git.eclipse.org/r/jetty/org.eclipse.jetty.project.git", Vcs.GIT ,"0f70f288" ,20 , Management.MVN ),# 30 Build failure
     ResearchProject("https://svn.apache.org/repos/asf/bval", Vcs.SVN, 1598345, 20, Management.MVN),						# 5 Not Downloaded ???? I did download it, but why was it not there in the first place??
     ResearchProject("https://git.eclipse.org/r/p/jgit/jgit", Vcs.GIT, "bf33a6ee", 20, Management.MVN), 						# 21 WORKS! 
     ResearchProject("https://svn.apache.org/repos/asf/pdfbox", Vcs.SVN, 1582785, 20, Management.MVN), 						# 15 Failed on dependencies
