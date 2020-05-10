@@ -184,8 +184,6 @@ class ResearchProject():
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/validator", Vcs.SVN, 1610469, 20, Management.MVN), 		# 4 WORKS!
     # ResearchProject("https://github.com/graphhopper/graphhopper",Vcs.GIT,"0e0e311c",20,Management.MVN),						# 7 CAnnot resolve dependencies CHECKOUT
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/functor", Vcs.SVN, 1541713, 20, Management.MVN), 		# 9 WORKS!
-    # ResearchProject("https://svn.apache.org/repos/asf/empire-db", Vcs.SVN, 1562914, 20, Management.MVN), 					# 10 WORKS!
-    # ResearchProject("https://github.com/jfree/jfreechart", Vcs.GIT, "093547df273c8a5521e9188ab66cbb7a1609928d", 20, Management.MVN), 							# 11  uses GIT for tracking, but used svn before. Ekstazi did not specify which SHA to use, but I found some old logs, and found the SHA by the date
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/collections", Vcs.SVN, 1567759, 20, Management.MVN), 	# 12 WORKS
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/lang", Vcs.SVN, 1568639, 20, Management.MVN), 			# 13 MVN reports build fail, but it seems only tests are failing. ANT does not build at all though
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/configuration", Vcs.SVN, 1571738, 16, Management.MVN), 	# 14 Test failures CHECKOUT
@@ -195,6 +193,7 @@ class ResearchProject():
     # ResearchProject("https://svn.apache.org/repos/asf/logging/log4j", Vcs.SVN, 1567108, 19, Management.MVN), 				# 20 Works!
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/io", Vcs.SVN, 1603493, 20, Management.MVN), 			# 22 Works!
     # ResearchProject("https://git.eclipse.org/r/p/jgit/jgit", Vcs.GIT, "bf33a6ee", 20, Management.MVN), 						# 21 WORKS! 
+    # ResearchProject("https://svn.apache.org/repos/asf/empire-db", Vcs.SVN, 1562914, 20, Management.MVN), 					# 10 WORKS!
 
 
 
@@ -202,7 +201,6 @@ class ResearchProject():
     # ResearchProject("https://svn.apache.org/repos/asf/commons/proper/math", Vcs.SVN, 1573523, 20, Management.MVN), 			# 25 Crashed after cloning
     # ResearchProject("https://svn.apache.org/repos/asf/continuum", Vcs.SVN, 1534878, 20, Management.MVN),  					# 27 Build failure
     # ResearchProject("https://github.com/google/guava", Vcs.GIT ,"af2232f5" ,16 , Management.MVN), 							# 28 Build failure
-    # ResearchProject("https://git-wip-us.apache.org/repos/asf/camel", Vcs.GIT ,"f6114d52" ,20 , Management.MVN ), 			# 29  CAREFUL ONLY CORE
     # ResearchProject("https://github.com/apache/hadoop-common", Vcs.GIT ,"f3043f97" ,20 , Management.MVN ), 				# 31     CAREFUL ONLY CORE
     # ResearchProject("https://svn.apache.org/repos/asf/river/jtsk", Vcs.SVN, 1520131, 19, Management.ANT), 					# 8 WORKS
     # ResearchProject("https://svn.apache.org/repos/asf/zookeeper", Vcs.SVN ,1605517 ,19 , Management.ANT ), 					# 32 Seems to have failed on dependencies; repo2 does not seem to exist, but repo1 is, but it requires https; Execute failed: java.io.IOException: Cannot run program "autoreconf" (in directory "/home/vmasarik/git/zookeeper/trunk/src/c"): error=2, No such file
@@ -214,13 +212,15 @@ class ResearchProject():
     # ResearchProject("https://git.eclipse.org/r/jetty/org.eclipse.jetty.project.git", Vcs.GIT ,"0f70f288" ,20 , Management.MVN ),# 30 Build failure
     # ResearchProject("https://svn.apache.org/repos/asf/bval", Vcs.SVN, 1598345, 20, Management.MVN),						# 5 Not Downloaded ???? I did download it, but why was it not there in the first place??
     # ResearchProject("https://github.com/cucumber/cucumber-jvm", Vcs.GIT, "5df09f85", 20, Management.MVN),					# 1 TEST failed CHECKOUT
+    # ResearchProject("https://svn.apache.org/repos/asf/pdfbox", Vcs.SVN, 1582785, 20, Management.MVN), 						# 15 Failed on dependencies
 
 
 
 
 
 projects = [
-    ResearchProject("https://svn.apache.org/repos/asf/pdfbox", Vcs.SVN, 1582785, 20, Management.MVN), 						# 15 Failed on dependencies
+    ResearchProject("https://git-wip-us.apache.org/repos/asf/camel", Vcs.GIT ,"f6114d52" ,20 , Management.MVN ), 			# 29  CAREFUL ONLY CORE
+    ResearchProject("https://github.com/jfree/jfreechart", Vcs.GIT, "093547df273c8a5521e9188ab66cbb7a1609928d", 20, Management.MVN), 							# 11  uses GIT for tracking, but used svn before. Ekstazi did not specify which SHA to use, but I found some old logs, and found the SHA by the date
 ]
 
 
