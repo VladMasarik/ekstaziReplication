@@ -12,7 +12,7 @@ set -x
 
 #   did not test because only core modules need to be tested
 # "math" "continuum" "hadoop-common" "guava" problems with building, check it out
-declare -a names=( "bval" "jgit" "pdfbox" "cucumber-jvm" )
+declare -a names=( "jgit" "pdfbox" "cucumber-jvm" )
 
 TRUNK="trunk"
 TARGET="target"
